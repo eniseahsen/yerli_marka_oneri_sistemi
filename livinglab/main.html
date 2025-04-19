@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yerli Keşif</title>
+
+    <!-- Box Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">Yerli Keşif</a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+
+        <nav class="navbar">
+            <a href="#home" class="active">Anasayfa</a>
+            <a href="#about">Hakkımızda</a>
+            <a href="#skills">Neden Yerli Marka</a>
+            <a href="#portfolio">Yeni Markalar</a>
+            <a href="#contact">İletişim</a>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Hemen başla, ihtiyacın olan yerli markayı ve ürünü bul!</h3>
+        </div>
+
+        <div class="baloncuk">
+            <input type="text" id="userInput" placeholder="Yerli ürünlerden bir kahvaltı sofrası hazırlamak istiyorum..." />
+            <button onclick="startAssistant()">Başla</button>
+        </div>
+
+        <div class="cevap" id="cevapDiv"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="heading">Yerli Keşif <span>Hakkında</span></h2>
+            <p>"Beş yazılım mühendisliği öğrencisi olarak Yerli Marka Öneri Chatbotu Projesi'ni tasarlama amacımız, kullanıcılarımıza Türkiye’nin dört bir yanından gelen en özel yerli markaları ve ürünleri tanıtmaktır."</p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <h2 class="heading">Neden Yerli Marka</h2>
+        <p>Yerli markalar, sadece ekonomik anlamda değil, toplumsal ve çevresel sürdürülebilirlik açısından da önemli bir yer tutar. Yerli markalarla yapılan alışveriş, sadece bireysel bir tüketim değil, aynı zamanda toplum ve ülke için de önemli bir katkıdır.</p>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="heading">Yeni Markalar</h2>
+
+        <div class="portfolio-container">
+            <div class="portfolio-box">
+                <img src="https://cdn.myikas.com/images/theme-images/0cc0481d-86de-4468-ab36-8fa553bc2369/image_360.webp" alt="">
+                <div class="portfolio-layer">
+                    <h4>WIWIFY</h4>
+                    <a href="https://wiwify.com/"><i class='bx bx-link'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="https://dirilisenerjidrink.com//panel/uploads/settings_v/1280x720/logoicin-yatay-dirilis.png" alt="">
+                <div class="portfolio-layer">
+                    <h4>Diriliş Kola</h4>
+                    <a href="https://dirilisenerjidrink.com/index.html"><i class='bx bx-link'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="https://www.mipo.com.tr/catalog/view/theme/mipo/assets/images/logo/mipo-icon.svg" alt="">
+                <div class="portfolio-layer">
+                    <h4>Mipo</h4>
+                    <a href="#"><i class='bx bx-link'></i></a>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <img src="https://www.bobajoy.com.tr//data/genel/bobajoy_logo_231x71.png" alt="">
+                <div class="portfolio-layer">
+                    <h4>Bobajoy</h4>
+                    <a href="#"><i class='bx bx-link'></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="heading">İletişime Geç!</h2>
+        <form id="contactForm" action="#">
+
+            <div class="input-box">
+                <input type="text" name="name" placeholder="İsim Soyisim" required>
+                <input type="email" name="email" placeholder="Email Adresi" required>
+            </div>
+
+            <div class="input-box">
+                <input type="number" name="phone" placeholder="Telefon Numarası">
+                <input type="text" name="subject" placeholder="Email Konusu">
+            </div>
+
+            <textarea name="message" placeholder="Mesajınız" required></textarea>
+            <input type="submit" value="Gönder" class="btn">
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="foter-text">
+            <p>Copyright &copy; 2024 by AI Dream Team | All Rights Reserved.</p>
+        </div>
+
+        <div class="footer-iconTop">
+            <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal JS -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- Custom JS -->
+    <script src="script/script.js"></script>
+
+    <!-- Contact Form Handler -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const contactForm = document.getElementById("contactForm");
+        contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch("http://127.0.0.1:5000/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    alert(result.message || "Mesaj başarıyla gönderildi!");
+                    contactForm.reset();
+                })
+                .catch(error => {
+                    console.error("Hata:", error);
+                    alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                });
+        });
+    });
+    </script>
+</body>
+
+</html>
